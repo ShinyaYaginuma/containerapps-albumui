@@ -8,7 +8,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - '**'    
+    - '**'
 # Add env
 env:
   CONTAINER_REGISTRY: handson01cicde27bdvjgc67kw.azurecr.io # CICD用に作成したRGに存在しているAzure Container Registry のドメイン (~.azurecr.io) をこちらに設定
