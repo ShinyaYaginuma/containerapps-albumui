@@ -15,6 +15,7 @@ env:
   # Add envs
   RESOURCE_GROUP_NAME: Handson01-CICD # 準備タスクで作成されたリソースグループ名をここに記載
   CONTAINERAPP_NAME: ctapp-demo-ui # 準備タスクで作成された API Container App 名をここに記載
+  API_BASE_URL: https://ctapp-demo-api.mangomoss-9c7aa0cf.japaneast.azurecontainerapps.io # 準備タスクで作成された API Container App のアプリケーション URL をここに記載
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -91,7 +92,7 @@ jobs:
             az containerapp ingress enable \
               --name ${{ env.CONTAINERAPP_NAME }} \
               --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
-              --target-port 3500 \
+              --target-port 3000 \
               --type external
 
             container_name=$( \
@@ -105,4 +106,5 @@ jobs:
               --name ${{ env.CONTAINERAPP_NAME }} \
               --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
               --container-name $container_name \
-              --image ${{ env.CONTAINER_REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ github.sha }}
+              --image ${{ env.CONTAINER_REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ github.sha }} \
+              --set-env-vars API_BASE_URL=${{ env.API_BASE_URL }}
